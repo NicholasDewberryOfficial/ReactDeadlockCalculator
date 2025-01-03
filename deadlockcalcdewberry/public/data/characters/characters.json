@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Abrams",
+    "image": "/images/Abrams_artcard.png",
+    "dps": 68,
+    "bulletDamage": 4.5,
+    "pelletsPerShot": 9,
+    "ammo": 9,
+    "bulletsPerSecond": 1.67,
+    "reloadTime": 0.353,
+    "bulletVelocity": 610,
+    "lightMeleeDamage": 63,
+    "heavyMeleeDamage": 116,
+    "falloffRangeStart": 20,
+    "falloffRangeEnd": 46,
+    "health": 570,
+    "healthRegen": 1.5,
+    "moveSpeed": 6.8,
+    "stamina": 3,
+    "spiritPower": 0
+  },
+  {
+    "name": "Bebop",
+    "image": "/images/bebop_artcard.png",
+    "dps": 66,
+    "bulletDamage": 53,
+    "pelletsPerShot": 1,
+    "ammo": 66,
+    "bulletsPerSecond": 12.5,
+    "reloadTime": 2.35,
+    "bulletVelocity": 508,
+    "lightMeleeDamage": 63,
+    "heavyMeleeDamage": 116,
+    "falloffRangeStart": 20,
+    "falloffRangeEnd": 51,
+    "health": 650,
+    "healthRegen": 3,
+    "moveSpeed": 6.6,
+    "stamina": 3,
+    "spiritPower": 0
+  }
+
+]
