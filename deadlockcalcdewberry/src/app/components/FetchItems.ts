@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 
 interface Item {
     id: string;
-    name: string;
-    description: string;
-    cost: number;
-    tier: number;
-    slot: "Weapon" | "Vitality" | "Spirit";
+    Name: string;
+    Description: string;
+    Cost: number;
+    Tier: number;
+    Slot: "Weapon" | "Armor" | "Spirit";
     passiveBonuses: { [key: string]: number };
     activeAbility?: {
         cooldown: number;
@@ -26,9 +26,12 @@ export const useFetchItems = () => {
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const response = await fetch("/data/items.json");
+                const response = await fetch("data/items/items.json");
                 const itemsData = await response.json();
-
+                console.log("itemsData", itemsData);
+                if (!itemsData) {
+                    throw new Error("itemsData is null or undefined");
+                }
                 const itemsArray: Item[] = Object.keys(itemsData).map((key) => ({
                     id: key,
                     ...itemsData[key],

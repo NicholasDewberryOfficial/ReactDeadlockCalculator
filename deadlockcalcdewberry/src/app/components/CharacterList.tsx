@@ -1,8 +1,8 @@
 "use client";
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import CharacterCard from "./charactercardcomponent";
-import ItemSelection from "./ItemSelection";
+import ItemSelection from "./ItemSelection"; // <-- (Unchanged import)
 
 interface Character {
     name: string;
@@ -30,7 +30,6 @@ const CharacterList: React.FC = () => {
     const [attackingCharacter, setAttackingCharacter] = useState<Character | null>(null);
     const [defendingCharacter, setDefendingCharacter] = useState<Character | null>(null);
     const [isCollapsed, setIsCollapsed] = useState<boolean>(false); // Tracks visibility of the character cards
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -62,10 +61,7 @@ const CharacterList: React.FC = () => {
         setIsCollapsed(!isCollapsed); // Toggle the collapse state
     };
 
-
-
     return (
-
         <div>
             {/* Toggle Button */}
             <button
@@ -79,66 +75,81 @@ const CharacterList: React.FC = () => {
                     width: "100%",
                     borderRadius: "5px",
                     cursor: "pointer",
+                    // Added: Smooth transition for hover effect
+                    transition: "background-color 0.3s ease, transform 0.2s ease",
                 }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#4a2960")} // Hover color
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#342045")} // Revert color
             >
                 {isCollapsed ? "Show Characters" : "Hide Characters"}
             </button>
 
             {/* Collapsible Section */}
-            {!isCollapsed && (
-                <><h1> Left click = choose attacker. Right click = choose defender.</h1>
-                    <div style={{display: "flex", flexWrap: "wrap", gap: "20px", padding: "20px"}}>
+            <div
+                style={{
+                    maxHeight: isCollapsed ? "0" : "1000px", // Adjust height based on your content
+                    overflow: "hidden", // Prevent overflow
+                    transition: "max-height 0.5s ease", // Smooth height transition
+                }}
+            >
+                {!isCollapsed && (
+                    <>
+                        <h1>Left click = choose attacker. Right click = choose defender.</h1>
+                        <div
+                            style={{
+                                display: "flex",
+                                flexWrap: "wrap",
+                                gap: "20px",
+                                padding: "20px",
+                            }}
+                        >
+                            {characters.map((character, index) => (
+                                <div
+                                    key={index}
+                                    onClick={() => handleCharacterSelect(character, "attacker")}
+                                    onContextMenu={(e) => {
+                                        e.preventDefault();
+                                        handleCharacterSelect(character, "defender");
+                                    }}
+                                    style={{
+                                        border: attackingCharacter?.name === character.name
+                                            ? "10px solid #fcac4d" // Orange for attacker
+                                            : defendingCharacter?.name === character.name
+                                                ? "10px solid #74b01c" // Green for defender
+                                                : "10px solid transparent", // No border for unselected
+                                        borderRadius: "8px",
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    <CharacterCard
+                                        name={character.name}
+                                        image={character.image}
+                                        dps={character.dps}
+                                        bulletDamage={character.bulletDamage}
+                                        pelletsPerShot={character.pelletsPerShot}
+                                        ammo={character.ammo}
+                                        bulletsPerSecond={character.bulletsPerSecond}
+                                        reloadTime={character.reloadTime}
+                                        bulletVelocity={character.bulletVelocity}
+                                        lightMeleeDamage={character.lightMeleeDamage}
+                                        heavyMeleeDamage={character.heavyMeleeDamage}
+                                        falloffRangeStart={character.falloffRangeStart}
+                                        falloffRangeEnd={character.falloffRangeEnd}
+                                        health={character.health}
+                                        healthRegen={character.healthRegen}
+                                        moveSpeed={character.moveSpeed}
+                                        stamina={character.stamina}
+                                        spiritPower={character.spiritPower}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </>
+                )}
+            </div>
 
-                        {characters.map((character, index) => (
-                            <div
-                                key={index}
-                                onClick={() => handleCharacterSelect(character, "attacker")}
-                                onContextMenu={(e) => {
-                                    e.preventDefault();
-                                    handleCharacterSelect(character, "defender");
-                                }}
-                                style={{
-                                    border: attackingCharacter?.name === character.name
-                                        ? "10px solid #fcac4d" // Orange for attacker
-                                        : defendingCharacter?.name === character.name
-                                            ? "10px solid #74b01c" // Green for defender
-                                            : "10px solid transparent", // No border for unselected
-                                    borderRadius: "8px",
-                                    cursor: "pointer",
-                                }}
-                            >
-                                <CharacterCard
-                                    name={character.name}
-                                    image={character.image}
-                                    dps={character.dps}
-                                    bulletDamage={character.bulletDamage}
-                                    pelletsPerShot={character.pelletsPerShot}
-                                    ammo={character.ammo}
-                                    bulletsPerSecond={character.bulletsPerSecond}
-                                    reloadTime={character.reloadTime}
-                                    bulletVelocity={character.bulletVelocity}
-                                    lightMeleeDamage={character.lightMeleeDamage}
-                                    heavyMeleeDamage={character.heavyMeleeDamage}
-                                    falloffRangeStart={character.falloffRangeStart}
-                                    falloffRangeEnd={character.falloffRangeEnd}
-                                    health={character.health}
-                                    healthRegen={character.healthRegen}
-                                    moveSpeed={character.moveSpeed}
-                                    stamina={character.stamina}
-                                    spiritPower={character.spiritPower}/>
-                            </div>
-                        ))}
-                    </div>
-                </>
-
-
-
-            )
-            }
-
-            {/* Selected Characters */
-            }
-            <div style={{padding: "20px", border: "1px solid #ccc", marginTop: "20px" }}>
+            {/* Selected Characters */}
+            <div style={{ padding: "20px", border: "1px solid #ccc", marginTop: "20px" }}>
                 <h2>Selected Characters</h2>
                 <div>
                     <h3>Attacking Character</h3>
@@ -166,9 +177,17 @@ const CharacterList: React.FC = () => {
                     )}
                 </div>
             </div>
+
+            {/* ---------- NEW SECTION START ---------- */}
+            {/* Add an ItemSelection component to integrate item popup */}
+            <ItemSelection
+                onSelectItem={(item) => {
+                    console.log("Selected item:", item);
+                }}
+            />
+            {/* ---------- NEW SECTION END ------------ */}
         </div>
     );
 };
-
 
 export default CharacterList;

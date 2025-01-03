@@ -1,10 +1,10 @@
 import React from "react";
 
 interface ItemCardProps {
-    name: string;
-    description: string;
-    cost: number;
-    tier: number;
+    Name: string;
+    Description: string;
+    Cost: number;
+    Tier: number;
     passiveBonuses: { [key: string]: number };
     activeAbility?: {
         cooldown: number;
@@ -18,10 +18,10 @@ interface ItemCardProps {
 }
 
 const ItemCard: React.FC<ItemCardProps> = ({
-                                               name,
-                                               description,
-                                               cost,
-                                               tier,
+                                               Name,
+                                               Description,
+                                               Cost,
+                                               Tier,
                                                passiveBonuses,
                                                activeAbility,
                                                onSelect,
@@ -35,7 +35,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
                 padding: "16px",
                 margin: "10px",
                 cursor: "pointer",
-                backgroundColor: "#f9f9f9",
+                backgroundColor: "#151313",
                 boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
                 transition: "transform 0.2s ease",
             }}
@@ -43,21 +43,21 @@ const ItemCard: React.FC<ItemCardProps> = ({
             onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
         >
             {/* Item Name */}
-            <h3 style={{ marginBottom: "8px" }}>{name}</h3>
+            <h3 style={{ marginBottom: "8px" }}>{Name}</h3>
 
             {/* Item Description */}
-            <p style={{ fontSize: "0.9rem", marginBottom: "12px" }} dangerouslySetInnerHTML={{ __html: description }} />
+            <p style={{ fontSize: "0.9rem", marginBottom: "12px" }} dangerouslySetInnerHTML={{ __html: Description }} />
 
             {/* Item Cost and Tier */}
             <p>
-                <strong>Cost:</strong> {cost} | <strong>Tier:</strong> {tier}
+                <strong>Cost:</strong> {Cost} | <strong>Tier:</strong> {Tier}
             </p>
 
             {/* Passive Bonuses */}
             <div style={{ marginTop: "12px" }}>
                 <h4 style={{ fontSize: "0.95rem", marginBottom: "4px" }}>Passive Bonuses:</h4>
                 <ul style={{ paddingLeft: "20px" }}>
-                    {Object.entries(passiveBonuses).map(([stat, value]) => (
+                    {Object.entries(passiveBonuses ?? {}).map(([stat, value]) => (
                         <li key={stat} style={{ fontSize: "0.85rem" }}>
                             <strong>{stat}:</strong> {value}
                         </li>

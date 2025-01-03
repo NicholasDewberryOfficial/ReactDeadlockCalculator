@@ -3,11 +3,11 @@ import ItemCard from "./ItemCard";
 
 interface Item {
     id: string;
-    name: string;
-    description: string;
-    cost: number;
-    tier: number;
-    slot: "Weapon" | "Vitality" | "Spirit";
+    Name: string;
+    Description: string;
+    Cost: number;
+    Tier: number;
+    Slot: "Weapon" | "Armor" | "Spirit";
     passiveBonuses: { [key: string]: number };
     activeAbility?: {
         cooldown: number;
@@ -26,10 +26,10 @@ interface ItemPopupProps {
 }
 
 const ItemPopup: React.FC<ItemPopupProps> = ({ items, onSelectItem, onClose }) => {
-    const [activeCategory, setActiveCategory] = useState<"Weapon" | "Vitality" | "Spirit">("Weapon");
+    const [activeCategory, setActiveCategory] = useState<"Weapon" | "Armor" | "Spirit">("Weapon");
 
     // Filter items based on the active category
-    const filteredItems = items.filter((item) => item.slot === activeCategory);
+    const filteredItems = items.filter((item) => item.Slot === activeCategory);
 
     return (
         <div
@@ -73,11 +73,11 @@ const ItemPopup: React.FC<ItemPopupProps> = ({ items, onSelectItem, onClose }) =
                         Weapon
                     </button>
                     <button
-                        onClick={() => setActiveCategory("Vitality")}
+                        onClick={() => setActiveCategory("Armor")}
                         style={{
                             marginRight: "10px",
                             padding: "10px",
-                            backgroundColor: activeCategory === "Vitality" ? "#007bff" : "#444",
+                            backgroundColor: activeCategory === "Armor" ? "#007bff" : "#444",
                             color: "#fff",
                             border: "none",
                             borderRadius: "5px",
@@ -122,10 +122,10 @@ const ItemPopup: React.FC<ItemPopupProps> = ({ items, onSelectItem, onClose }) =
                     filteredItems.map((item) => (
                         <ItemCard
                             key={item.id}
-                            name={item.name}
-                            description={item.description}
-                            cost={item.cost}
-                            tier={item.tier}
+                            Name={item.Name}
+                            Description={item.Description}
+                            Cost={item.Cost}
+                            Tier={item.Tier}
                             passiveBonuses={item.passiveBonuses}
                             activeAbility={item.activeAbility}
                             onSelect={() => onSelectItem(item)}
