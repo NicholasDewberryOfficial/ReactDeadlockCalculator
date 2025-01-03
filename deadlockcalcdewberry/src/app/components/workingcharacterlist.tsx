@@ -1,8 +1,7 @@
 "use client";
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import CharacterCard from "./charactercardcomponent";
-import ItemSelection from "./ItemSelection";
 
 interface Character {
     name: string;
@@ -25,12 +24,31 @@ interface Character {
     spiritPower: number;
 }
 
+
 const CharacterList: React.FC = () => {
     const [characters, setCharacters] = useState<Character[]>([]);
     const [attackingCharacter, setAttackingCharacter] = useState<Character | null>(null);
     const [defendingCharacter, setDefendingCharacter] = useState<Character | null>(null);
     const [isCollapsed, setIsCollapsed] = useState<boolean>(false); // Tracks visibility of the character cards
 
+    // Added: State for managing the list of items (populate this with your JSON data)
+    const [items, setItems] = useState<Item[]>([]);
+
+    // Added: State to track if the ItemPopup modal is open
+    const [showPopup, setShowPopup] = useState<boolean>(false);
+
+    // Added: State for managing selected items for the build
+    const [selectedItems, setSelectedItems] = useState<Item[]>([]);
+
+    // Function to handle item selection (added)
+    const handleSelectItem = (item: Item) => {
+        if (selectedItems.length < 12) {
+            setSelectedItems([...selectedItems, item]);
+            setShowPopup(false); // Close the popup after selecting an item
+        } else {
+            alert("You can only select up to 12 items!"); // Limit items to 12
+        }
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -45,6 +63,8 @@ const CharacterList: React.FC = () => {
                 console.error("Error fetching character data:", error);
             }
         };
+
+
 
         // Function to handle item selection (added)
         fetchData();
@@ -61,8 +81,6 @@ const CharacterList: React.FC = () => {
     const toggleCollapse = () => {
         setIsCollapsed(!isCollapsed); // Toggle the collapse state
     };
-
-
 
     return (
 
@@ -169,6 +187,5 @@ const CharacterList: React.FC = () => {
         </div>
     );
 };
-
 
 export default CharacterList;
