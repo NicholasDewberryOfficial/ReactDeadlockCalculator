@@ -2,24 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import CharacterCard from "./charactercardcomponent";
+import { Item } from "./item";
 
 
-interface Item {
-    Name: string;
-    Description: string;
-    Cost: number;
-    Tier: number;
-    Slot: "Weapon" | "Armor" | "Spirit";
-    passiveBonuses: { [key: string]: number };
-    activeAbility?: {
-        cooldown: number;
-        duration: number;
-        castRange: number;
-        castDelay: number;
-        resourceCost: number;
-        moveSpeed: number;
-    };
-}
 
 
 interface Character {

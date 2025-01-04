@@ -1,22 +1,5 @@
 import { useState, useEffect } from "react";
-
-interface Item {
-    id: string;
-    Name: string;
-    Description: string;
-    Cost: number;
-    Tier: number;
-    Slot: "Weapon" | "Armor" | "Spirit";
-    passiveBonuses: { [key: string]: number };
-    activeAbility?: {
-        cooldown: number;
-        duration: number;
-        castRange: number;
-        castDelay: number;
-        resourceCost: number;
-        moveSpeed: number;
-    };
-}
+import { Item } from "./item"
 
 export const useFetchItems = () => {
     const [items, setItems] = useState<Item[]>([]);

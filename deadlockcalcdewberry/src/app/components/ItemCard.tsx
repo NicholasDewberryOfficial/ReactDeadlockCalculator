@@ -1,21 +1,36 @@
 import React from "react";
 
+import { Item } from "./item"
+
+
 interface ItemCardProps {
-    Name: string;
+    // These may be optional if they're not always present
+    // or if you parse them differently at fetch-time.
+    Name?: string;
     Description: string;
-    Cost: number;
-    Tier: number;
-    passiveBonuses: { [key: string]: number };
+    Cost?: number | string;
+    Tier?: number | string;
+
+    // Because different items can have varied stats,
+    // let "passiveBonuses" safely handle string or number values,
+    // and be optional if some items don’t have it.
+    passiveBonuses?: { [key: string]: number | string };
+
+    // Active abilities may or may not exist, and each
+    // field might be numeric or string in the raw data.
     activeAbility?: {
-        cooldown: number;
-        duration: number;
-        castRange: number;
-        castDelay: number;
-        resourceCost: number;
-        moveSpeed: number;
+        cooldown?: number | string;
+        duration?: number | string;
+        castRange?: number | string;
+        castDelay?: number | string;
+        resourceCost?: number | string;
+        moveSpeed?: number | string;
     };
+
+    // The one required prop for selecting the item
     onSelect: () => void;
 }
+
 
 const ItemCard: React.FC<ItemCardProps> = ({
                                                Name,
