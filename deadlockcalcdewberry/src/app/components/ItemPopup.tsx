@@ -67,11 +67,12 @@ const ItemPopup: React.FC<ItemPopupProps> = ({ items, onSelectItem, onClose }) =
                 // CHANGED: Use our getCategoryBackground for unique transparency/color
                 backgroundColor: getCategoryBackground(activeCategory),
                 opacity: 0.9, // Slight transparency
-                zIndex: 1000,
+                zIndex: 2000,
                 display: "flex",
                 flexDirection: "column",
                 padding: "20px",
                 overflowY: "scroll",
+                pointerEvents: "auto",
             }}
         >
             {/* Header with Tabs and Close Button */}
@@ -95,6 +96,7 @@ const ItemPopup: React.FC<ItemPopupProps> = ({ items, onSelectItem, onClose }) =
                             border: "none",
                             borderRadius: "5px",
                             cursor: "pointer",
+
                         }}
                     >
                         Weapon
